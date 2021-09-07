@@ -29,7 +29,8 @@ class _HomePageState extends State<HomePage> {
             articles = snapshot.data as List<Article>;
             return ListView.builder(
               itemCount: articles.length,
-              itemBuilder: (context, index) => newsListTile(articles[index]),
+              itemBuilder: (context, index) =>
+                  newsListTile(articles[index], context),
             );
           }
           articles = [];
