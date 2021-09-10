@@ -1,17 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_news_app/models/article_model.dart';
 import 'package:my_news_app/pages/detail_page.dart';
 
 Widget newsListTile(Article article, BuildContext context) {
   return InkWell(
-    onTap: () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DetailPage(
-                    article: article,
-                  )));
-    },
+    onTap: () => Get.to(DetailPage(article: article)),
     child: Card(
       elevation: 6.0,
       child: Padding(
@@ -44,10 +39,11 @@ Widget newsListTile(Article article, BuildContext context) {
             Container(
               height: 250,
               width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(article.urlToImage),
-                ),
+              child: CachedNetworkImage(
+                imageUrl: article.urlToImage,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
             SizedBox(
